@@ -1,0 +1,1 @@
+web: cd rossetiback/rossetiback && gunicorn rossetiback.wsgi 0.0.0.0:$PORT
