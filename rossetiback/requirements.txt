@@ -1,0 +1,5 @@
+Django
+gunicorn
+django-environ
+whitenoise
+dj-database-url
