@@ -6,10 +6,15 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('common', '0009_auto_20201017_2103'),
+        ('common', '0008_auto_20201017_1639'),
     ]
 
     operations = [
+        migrations.AddField(
+            model_name='defect',
+            name='report',
+            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='defects', to='common.Report'),
+        ),
         migrations.AddField(
             model_name='subobject',
             name='latitude',
