@@ -15,7 +15,7 @@
     {% if not object.received_by %}
         <a href="{% url 'receive_report' object.pk %}">Принять лист осмотра</a>
     {% else %}
-        <p>Принял мастер : {{object.received_by }} {{ objects.received_at_dt }}</p>
+        <p>Принял мастер : {{object.received_by }} {{ object.received_at_dt }}</p>
     {% endif %}
     
 {% endblock %}
