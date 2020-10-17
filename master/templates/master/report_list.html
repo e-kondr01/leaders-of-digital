@@ -1,0 +1,13 @@
+{% extends "master/layout.html" %}
+
+{% block body %}
+    <h2>Распоряжения</h2>
+
+    <ul>
+        {% for report in object_list %}
+            <li>
+                <h4><a href="{% url 'report_detail' report.pk %}">Листок осмотра ВЛ {{ report.order.object_num }} от {{ report.object.job_finished_dt}}</a></h4>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
