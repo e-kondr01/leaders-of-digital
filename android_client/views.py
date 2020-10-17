@@ -63,10 +63,10 @@ class SubmitOrderData(APIView):
 
         report = Report(order=order)
 
-        job_started = request.data['job_started'] 
+        job_started = request.data['job_started'] // 1000
         order.job_started = job_started
         order.instructions_received = job_started
-        job_finished = request.data['job_finished']
+        job_finished = request.data['job_finished'] // 1000
         order.job_finished = job_finished
         order.active = False
 
