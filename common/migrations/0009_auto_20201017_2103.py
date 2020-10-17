@@ -11,9 +11,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.DeleteModel(
-            name='Report',
-        ),
+
         migrations.CreateModel(
             name='Report',
             fields=[
