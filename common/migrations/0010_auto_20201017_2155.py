@@ -12,11 +12,6 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.AddField(
-            model_name='defect',
-            name='report',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.PROTECT, related_name='defects', to='common.Report'),
-        ),
-        migrations.AddField(
             model_name='subobject',
             name='latitude',
             field=models.DecimalField(decimal_places=2, max_digits=4, null=True),
