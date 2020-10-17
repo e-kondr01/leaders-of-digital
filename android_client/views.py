@@ -17,7 +17,7 @@ class GetOrders(APIView):
             order_info = {}
             order_info['order_id'] = order.pk
             order_info['order_num'] = order.order_num
-            order_info['place'] = str(order.object) + order.range
+            order_info['place'] = str(order.object)
             order_info['latitude'] = str(order.object.latitude)
             order_info['longitude'] = str(order.object.longitude)
             order_info['description'] = order.safety_desc
@@ -31,18 +31,12 @@ class GetOrderInfo(APIView):
 
     def get(self, request):
         pk = self.kwargs['pk']
+        order = Order.objects.get(pk=pk)
 
         resp = {}
         resp['defect_types'] = []
+        resp['subobjects'] = []
         defects = DefectType.objects.all()
         for defect in defects:
             resp['defect_types'].append(str(defect))
         return Response(resp)
-
-
-def obtain_id(request):
-    if request.user.is_authenticated:
-        resp = {'user_id': request.user.id}
-    else:
-        resp = {'error': 'user not authenticated'}
-    return JsonResponse(resp)
