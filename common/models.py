@@ -82,6 +82,9 @@ class Order(models.Model):
     def get_absolute_url(self):
         return reverse('order_detail', kwargs={'pk': self.pk})
 
+    def electricians(self):
+        return self.electrician.all()
+
     def instructions_given_dt(self):
         if self.instructions_given:
             if len(str(self.instructions_given)) == 13:
