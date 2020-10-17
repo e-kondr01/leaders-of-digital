@@ -56,15 +56,15 @@ class Subobject(models.Model):
 
 
 class Order(models.Model):
-    order_num = models.CharField(max_length=16, null=True)
+    order_num = models.CharField(max_length=16, null=True, verbose_name='Номер распоряжения')
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT,
-                                     related_name='orders', null=True)
+                                     related_name='orders', null=True, verbose_name='Организация')
     subdivision = models.ForeignKey(Subdivision, on_delete=models.PROTECT,
-                                    related_name='orders', null=True)
+                                    related_name='orders', null=True, verbose_name='Подразделение')
     object = models.ForeignKey(Object, on_delete=models.PROTECT,
-                               related_name='orders', null=True)
-    safety_desc = models.CharField(max_length=1024, null=True)
-    active = models.BooleanField(default=True)
+                               related_name='orders', null=True, verbose_name='Место и наименование проведения работ')
+    safety_desc = models.CharField(max_length=1024, null=True, verbose_name='Технические мероприятия по обеспечению безопасности работ')
+    active = models.BooleanField(default=True, verbose_name='В процессе выполнения')
 
     instructions_given = models.BigIntegerField(null=True)
     instructions_received = models.BigIntegerField(null=True)
@@ -73,8 +73,8 @@ class Order(models.Model):
 
     master = models.ForeignKey(Worker, on_delete=models.PROTECT,
                                related_name='given_orders', null=True)
-    electrician = models.ForeignKey(Worker, on_delete=models.PROTECT,
-                                    related_name='received_orders', null=True)
+    electrician = models.ManyToManyField(Worker, related_name='received_orders',
+                                         null=True, verbose_name='Члены бригады')
 
     def __str__(self) -> str:
         return f'Распоряжение номер {self.order_num} от {self.master}'
@@ -84,24 +84,32 @@ class Order(models.Model):
 
     def instructions_given_dt(self):
         if self.instructions_given:
+            if len(self.instruction_given) == 13:
+                self.instructions_given //= 100
             return datetime.fromtimestamp(self.instructions_given, timezone.utc)
         else:
             return 'Ещё нет'
 
     def instructions_received_dt(self):
         if self.instructions_received:
+            if len(self.instructions_received) == 13:
+                self.instructions_received //= 100
             return datetime.fromtimestamp(self.instructions_received, timezone.utc)
         else:
             return 'Ещё нет'
 
     def job_started_dt(self):
         if self.job_started:
+            if len(self.job_started) == 13:
+                self.job_started //= 100
             return datetime.fromtimestamp(self.job_started, timezone.utc)
         else:
             return 'Ещё нет'
 
     def job_finished_dt(self):
         if self.job_finished:
+            if len(self.job_finished) == 13:
+                self.job_finished //= 100
             return datetime.fromtimestamp(self.job_finished, timezone.utc)
         else:
             return 'Ещё нет'
