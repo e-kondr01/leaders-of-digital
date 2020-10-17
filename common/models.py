@@ -89,13 +89,22 @@ class Order(models.Model):
             return 'Ещё нет'
 
     def instructions_received_dt(self):
-        return datetime.fromtimestamp(self.instructions_received, timezone.utc)
+        if self.instructions_received:
+            return datetime.fromtimestamp(self.instructions_received, timezone.utc)
+        else:
+            return 'Ещё нет'
 
     def job_started_dt(self):
-        return datetime.fromtimestamp(self.job_started, timezone.utc)
+        if self.job_started:
+            return datetime.fromtimestamp(self.job_started, timezone.utc)
+        else:
+            return 'Ещё нет'
 
     def job_finished_dt(self):
-        return datetime.fromtimestamp(self.job_finished, timezone.utc)
+        if self.job_finished:
+            return datetime.fromtimestamp(self.job_finished, timezone.utc)
+        else:
+            return 'Ещё нет'
 
 
 class DefectType(models.Model):

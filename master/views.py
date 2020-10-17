@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView
-from django.utils import timezone
+from django.utils import timezone as tz
 from datetime import timezone, datetime
 
 from common.models import *
@@ -18,7 +18,7 @@ class CreateOrder(CreateView):
 
     def form_valid(self, form):
         form.instance.master = self.request.user.worker
-        form.instance.instructions_received = datetime.timestamp(timezone.now())
+        form.instance.instructions_received = datetime.timestamp(tz.now())
         return super().form_valid(form)
 
 
