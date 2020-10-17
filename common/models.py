@@ -64,10 +64,12 @@ class Order(models.Model):
                                related_name='orders', null=True)
     safety_desc = models.CharField(max_length=1024, null=True)
     active = models.BooleanField(default=True)
+    '''
     instructions_given = models.DateTimeField(null=True)
     instructions_received = models.DateTimeField(null=True)
     job_started = models.DateTimeField(null=True)
     job_finished = models.DateTimeField(null=True)
+    '''
     master = models.ForeignKey(Worker, on_delete=models.PROTECT,
                                related_name='given_orders', null=True)
     electrician = models.ForeignKey(Worker, on_delete=models.PROTECT,
