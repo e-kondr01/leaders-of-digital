@@ -12,26 +12,26 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import environ
-#import dj_database_url
+import dj_database_url
 
 environ.Env.read_env()
 
-'''
+
 DATABASES = {}
 if dj_database_url.config():
-    DATABASES['default'].update(dj_database_url.config(conn_max_age=500))
-'''
+    DATABASES['default'] = dj_database_url.config(conn_max_age=500)
+else:
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
- }
-}
+    DATABASES['default']= {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['DB_NAME'],
+            'USER': os.environ['DB_USER'],
+            'PASSWORD': os.environ['DB_PASSWORD'],
+            'HOST': os.environ['DB_HOST'],
+            'PORT': os.environ['DB_PORT'],
+    }
+
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
