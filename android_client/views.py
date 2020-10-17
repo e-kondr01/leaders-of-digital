@@ -2,6 +2,7 @@ from django.http import JsonResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from datetime import datetime
 
 from common.models import *
 
@@ -61,10 +62,12 @@ class SubmitOrderData(APIView):
         report = Report(order=order)
 
         job_started = request.data['job_started']
-        order.job_started = job_started
-        order.instructions_received = job_started
+        job_started_dt = datetime.fromtimestamp(job_started)
+        order.job_started = job_started_dt
+        order.instructions_received = job_started_dt
         job_finished = request.data['job_finished']
-        order.job_finished = job_finished
+        job_finished_dt = datetime.fromtimestamp(job_finished)
+        order.job_finished = job_finished_dt
         order.active = False
 
         defects = request.data['defects']
