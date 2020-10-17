@@ -11,7 +11,7 @@ class OrderList(ListView):
 
 class CreateOrder(CreateView):
     model = Order
-    fields = ['order_num', 'organization', 'subdivision', 'object', 'range', 'safety_desc', 'electrician']
+    fields = ['order_num', 'organization', 'subdivision', 'object', 'safety_desc', 'electrician']
     template_name = "master/order_form.html"
 
     def form_valid(self, form):

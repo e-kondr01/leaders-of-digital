@@ -85,6 +85,14 @@ class DefectType(models.Model):
         return self.title
 
 
+class Report(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT,
+                              related_name='reports')
+
+    def __str__(self) -> str:
+        return f'Листок осмотра {self.order}'
+
+
 class Defect(models.Model):
     subobject = models.ForeignKey(Subobject, on_delete=models.PROTECT,
                                   related_name='defects')
@@ -92,3 +100,5 @@ class Defect(models.Model):
                               related_name='defects')
     defect_type = models.ForeignKey(DefectType, on_delete=models.PROTECT,
                                     related_name='defects', null=True)
+    report = models.ForeignKey(Report, on_delete=models.PROTECT,
+                               related_name='defects', null=True)

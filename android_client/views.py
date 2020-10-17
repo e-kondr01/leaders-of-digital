@@ -54,17 +54,25 @@ class GetOrderInfo(APIView):
 class SubmitOrderData(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request, pk=0):
-        order = Order.objects.get(pk=pk)
-        subobjects = order.object.subobjects.all()
-        defects = DefectType.objects.all()
+    def post(self, request, pk=0):
+        order_pk = request.data['order_id']
+        order = Order.objects.get(pk=order_pk)
 
-        resp = {}
-        resp['defect_types'] = {}
-        resp['subobjects'] = {}
+        report = Report(order=order)
 
+        job_started = request.data['job_started']
+        order.job_started = job_started
+        order.instructions_received = job_started
+        job_finished = request.data['job_finished']
+        order.job_finished = job_finished
+        order.active = False
+
+        defects = request.data['defects']
         for defect in defects:
-            resp['defect_types'][defect.pk] = str(defect)
-        for subobject in subobjects:
-            resp['subobjects'][subobject.pk] = str(subobject)
+            if defect['defect_type_id'] != 1:
+                pass
+
+        report.save()
+        order.save()
+        resp = 'success'
         return Response(resp)
