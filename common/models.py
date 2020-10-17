@@ -45,7 +45,7 @@ class Object(models.Model):
 
 
 class Subobject(models.Model):
-    title = models.CharField(max_length=32)
+    title = models.CharField(max_length=128)
     latitude = models.DecimalField(max_digits=4, decimal_places=2, null=True)
     longitude = models.DecimalField(max_digits=4, decimal_places=2, null=True)
     object = models.ForeignKey(Object, on_delete=models.PROTECT,

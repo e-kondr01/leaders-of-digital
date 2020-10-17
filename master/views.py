@@ -18,7 +18,7 @@ class CreateOrder(CreateView):
 
     def form_valid(self, form):
         form.instance.master = self.request.user.worker
-        form.instance.instructions_received = datetime.timestamp(tz.now())
+        form.instance.instructions_given = datetime.timestamp(tz.now())
         return super().form_valid(form)
 
 
