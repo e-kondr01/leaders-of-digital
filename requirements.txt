@@ -4,3 +4,4 @@ django-environ
 whitenoise
 dj-database-url
 psycopg2
+djangorestframework
