@@ -13,5 +13,6 @@
 
     <p>Осмотр произведён : {{object.order.job_finished_dt }} {{ objects.order.electrician }}</p>
     <p>Принял мастер : {{object.received_by }} {{ objects.received_at_dt }}</p>
+    <a href="{% url 'receive_report' object.pk %}">Принять лист осмотра</a>
     
 {% endblock %}
