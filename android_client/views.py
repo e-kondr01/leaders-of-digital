@@ -35,6 +35,31 @@ class GetOrderInfo(APIView):
         defects = DefectType.objects.all()
 
         resp = {}
+        resp['defect_types'] = []
+        resp['subobjects'] = []
+
+        for defect in defects:
+            data = {}
+            data['defect_type_id'] = defect.pk
+            data['defect_type_description'] = str(defect)
+            resp['defect_types'].append(data)
+        for subobject in subobjects:
+            data = {}
+            data['subobject_id'] = subobject.pk
+            data['subobject_description'] = str(subobject)
+            resp['subobjects'].append(data)
+        return Response(resp)
+
+
+class SubmitOrderData(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request, pk=0):
+        order = Order.objects.get(pk=pk)
+        subobjects = order.object.subobjects.all()
+        defects = DefectType.objects.all()
+
+        resp = {}
         resp['defect_types'] = {}
         resp['subobjects'] = {}
 

@@ -64,7 +64,7 @@ class Order(models.Model):
     active = models.BooleanField(default=True)
     instructions_given = models.DateTimeField(null=True)
     instructions_received = models.DateTimeField(null=True)
-    job_started =  models.DateTimeField(null=True)
+    job_started = models.DateTimeField(null=True)
     job_finished = models.DateTimeField(null=True)
     master = models.ForeignKey(Worker, on_delete=models.PROTECT,
                                related_name='given_orders', null=True)
