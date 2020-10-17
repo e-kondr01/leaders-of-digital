@@ -3,6 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from datetime import datetime
+from django.utils import timezone as tz
 
 from common.models import *
 
@@ -61,7 +62,7 @@ class SubmitOrderData(APIView):
         order_pk = request.data['order_id']
         order = Order.objects.get(pk=order_pk)
 
-        report = Report(order=order)
+        report = Report(order=order, received_at=datetime.timestamp(tz.now()))
 
         job_started = request.data['job_started'] // 1000
         order.job_started = job_started
@@ -73,7 +74,12 @@ class SubmitOrderData(APIView):
         defects = request.data['defects']
         for defect in defects:
             if defect['defect_type_id'] != 1:
-                pass
+                defect_type = DefectType.objects.get(pk=defect['defect_type_id'])
+                subobject = Subobject.objects.get(pk=defect['subobject_id'])
+                d = Defect(order=order,
+                           subobject=subobject,
+                           defect_type=defect_type)
+                d.save()
 
         report.save()
         order.save()

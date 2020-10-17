@@ -74,7 +74,7 @@ class Order(models.Model):
     master = models.ForeignKey(Worker, on_delete=models.PROTECT,
                                related_name='given_orders', null=True)
     electrician = models.ManyToManyField(Worker, related_name='received_orders',
-                                         null=True, verbose_name='Члены бригады')
+                                         verbose_name='Члены бригады')
 
     def __str__(self) -> str:
         return f'Распоряжение номер {self.order_num} от {self.master}'
@@ -84,7 +84,7 @@ class Order(models.Model):
 
     def instructions_given_dt(self):
         if self.instructions_given:
-            if len(self.instruction_given) == 13:
+            if len(self.instructions_given) == 13:
                 self.instructions_given //= 100
             return datetime.fromtimestamp(self.instructions_given, timezone.utc)
         else:
@@ -125,6 +125,15 @@ class DefectType(models.Model):
 class Report(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT,
                               related_name='reports')
+    received_at = models.BigIntegerField(null=True)
+
+    def received_at_dt(self):
+        if self.received_at:
+            if len(self.received_at) == 13:
+                self.received_at //= 100
+            return datetime.fromtimestamp(self.received_at, timezone.utc)
+        else:
+            return 'Ещё нет'
 
     def __str__(self) -> str:
         return f'Листок осмотра {self.order}'
@@ -137,5 +146,3 @@ class Defect(models.Model):
                               related_name='defects')
     defect_type = models.ForeignKey(DefectType, on_delete=models.PROTECT,
                                     related_name='defects', null=True)
-    report = models.ForeignKey(Report, on_delete=models.PROTECT,
-                               related_name='defects', null=True)
