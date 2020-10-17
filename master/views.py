@@ -44,4 +44,5 @@ def receive_report(request, pk):
     report = Report.objects.get(pk=pk)
     report.received_by = request.user.worker
     report.received_at = datetime.timestamp(tz.now())
+    report.save()
     return HttpResponseRedirect(reverse('report_detail', kwargs={'pk': pk}))
