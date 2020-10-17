@@ -8,9 +8,9 @@
     <p>Место и наименование проведения работ : {{object.object }} {{object.range }}</p>
     <p>Технические мероприятия по обеспечению безопасности работ: {{object.safety_desc }}</p>
     <p>Активно : {{object.active }}</p>
-    <p>Работник, отдавший распоряжение: {{object.master }} Подпись: {{object.instructions_given }}</p>
-    <p>Члены бригады: {{object.electrician }} Подпись: {{object.instructions_received }}</p>
-    <p>К работе приступили(дата, время) : {{object.job_started }}</p>
-    <p>Работа закончена(дата, время) : {{object.job_finished }}</p>
+    <p>Работник, отдавший распоряжение: {{object.master }} Подпись: {{object.instructions_given_dt }}</p>
+    <p>Члены бригады: {{object.electrician }} Подпись: {{object.instructions_received_dt }}</p>
+    <p>К работе приступили(дата, время) : {{object.job_started_dt }}</p>
+    <p>Работа закончена(дата, время) : {{object.job_finished_dt }}</p>
     
 {% endblock %}

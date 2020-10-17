@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
+from datetime import datetime, timezone
 
 
 class SafetyGroup(models.Model):
@@ -80,6 +81,21 @@ class Order(models.Model):
 
     def get_absolute_url(self):
         return reverse('order_detail', kwargs={'pk': self.pk})
+
+    def instructions_given_dt(self):
+        if self.instructions_given:
+            return datetime.fromtimestamp(self.instructions_given, timezone.utc)
+        else:
+            return 'Ещё нет'
+
+    def instructions_received_dt(self):
+        return datetime.fromtimestamp(self.instructions_received, timezone.utc)
+
+    def job_started_dt(self):
+        return datetime.fromtimestamp(self.job_started, timezone.utc)
+
+    def job_finished_dt(self):
+        return datetime.fromtimestamp(self.job_finished, timezone.utc)
 
 
 class DefectType(models.Model):
