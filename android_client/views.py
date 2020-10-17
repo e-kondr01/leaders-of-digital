@@ -7,7 +7,7 @@ from common.models import *
 
 
 class GetOrders(APIView):
-    permission_classes = (IsAuthenticated,)  
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request):
         worker = Worker.objects.get(user=request.user)
@@ -18,6 +18,8 @@ class GetOrders(APIView):
             order_info['order_id'] = order.pk
             order_info['order_num'] = order.order_num
             order_info['place'] = str(order.object) + order.range
+            order_info['latitude'] = str(order.object.latitude)
+            order_info['longitude'] = str(order.object.longitude)
             order_info['description'] = order.safety_desc
             order_info['master'] = str(order.master)
             resp.append(order_info)
@@ -25,20 +27,16 @@ class GetOrders(APIView):
 
 
 class GetOrderInfo(APIView):
-    permission_classes = (IsAuthenticated,)  
+    permission_classes = (IsAuthenticated,)
 
-    def get(self, request, pk):
-        worker = Worker.objects.get(user=request.user)
-        orders = Order.objects.filter(electrician=worker).filter(active=True).all()
-        resp = []
-        for order in orders:
-            order_info = {}
-            order_info['order_id'] = order.pk
-            order_info['order_num'] = order.order_num
-            order_info['place'] = str(order.object) + order.range
-            order_info['description'] = order.safety_desc
-            order_info['master'] = str(order.master)
-            resp.append(order_info)
+    def get(self, request):
+        pk = self.kwargs['pk']
+
+        resp = {}
+        resp['defect_types'] = []
+        defects = DefectType.objects.all()
+        for defect in defects:
+            resp['defect_types'].append(str(defect))
         return Response(resp)
 
 

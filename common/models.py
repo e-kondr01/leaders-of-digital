@@ -43,13 +43,13 @@ class Object(models.Model):
         return f'{self.title}'
 
 
-class Support(models.Model):
-    number = models.IntegerField()
+class Subobject(models.Model):
+    title = models.CharField(max_length=32)
     object = models.ForeignKey(Object, on_delete=models.PROTECT,
-                               related_name='supports')
+                               related_name='subobjects')
 
     def __str__(self) -> str:
-        return f'{self.object} {self.number}'
+        return f'{self.title}'
 
 
 class Order(models.Model):
@@ -60,8 +60,6 @@ class Order(models.Model):
                                     related_name='orders', null=True)
     object = models.ForeignKey(Object, on_delete=models.PROTECT,
                                related_name='orders', null=True)
-
-    range = models.CharField(max_length=512, null=True)
     safety_desc = models.CharField(max_length=1024, null=True)
     active = models.BooleanField(default=True)
     instructions_given = models.DateTimeField(null=True)
@@ -87,10 +85,10 @@ class DefectType(models.Model):
         return self.title
 
 
-class SupportDefect(models.Model):
-    support = models.ForeignKey(Support, on_delete=models.PROTECT,
-                                related_name='defects')
+class Defect(models.Model):
+    subobject = models.ForeignKey(Subobject, on_delete=models.PROTECT,
+                                  related_name='defects')
     order = models.ForeignKey(Order, on_delete=models.PROTECT,
                               related_name='defects')
-    order = models.ForeignKey(DefectType, on_delete=models.PROTECT,
-                              related_name='support_defects')
+    defect_type = models.ForeignKey(DefectType, on_delete=models.PROTECT,
+                                    related_name='defects', null=True)
