@@ -2,15 +2,16 @@
 
 {% block body %}
 
-    <h2>Распоряжение номер {{ object.order_num }}</h2>
-    <p>Организация : {{object.organization }}</p>
-    <p>Подразделение : {{object.subdivision }}</p>
-    <p>Место и наименование проведения работ : {{object.object }} {{object.range }}</p>
-    <p>Технические мероприятия по обеспечению безопасности работ: {{object.safety_desc }}</p>
-    <p>Активно : {{object.active }}</p>
-    <p>Работник, отдавший распоряжение: {{object.master }} Подпись: {{object.instructions_given_dt }}</p>
-    <p>Члены бригады: {{object.electrician }} Подпись: {{object.instructions_received_dt }}</p>
-    <p>К работе приступили(дата, время) : {{object.job_started_dt }}</p>
-    <p>Работа закончена(дата, время) : {{object.job_finished_dt }}</p>
+    <h2>Лист осмотра воздушной линии</h2>
+    <p>Организация : {{object.order.organization }}</p>
+    <p>Подразделение : {{object.order.subdivision }}</p>
+    <p>Место и наименование проведения работ : {{object.order.object }}</p>
+    <h4>Дефекты:</h4>
+    {% for defect in object.defects %}
+        <p>{{ defect.subobject }} - {{ defect.defect_type }}</p>
+    {% endfor %}
+
+    <p>Осмотр произведён : {{object.order.job_finished_dt }} {{ objects.order.electrician }}</p>
+    <p>Принял мастер : {{object.received_by }} {{ objects.received_at_dt }}</p>
     
 {% endblock %}

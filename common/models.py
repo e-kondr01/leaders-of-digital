@@ -122,23 +122,6 @@ class DefectType(models.Model):
         return self.title
 
 
-class Report(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.PROTECT,
-                              related_name='reports')
-    received_at = models.BigIntegerField(null=True)
-
-    def received_at_dt(self):
-        if self.received_at:
-            if len(str(self.received_at)) == 13:
-                self.received_at //= 1000
-            return datetime.fromtimestamp(self.received_at, timezone.utc)
-        else:
-            return 'Ещё нет'
-
-    def __str__(self) -> str:
-        return f'Листок осмотра {self.order}'
-
-
 class Defect(models.Model):
     subobject = models.ForeignKey(Subobject, on_delete=models.PROTECT,
                                   related_name='defects')
@@ -146,3 +129,26 @@ class Defect(models.Model):
                               related_name='defects')
     defect_type = models.ForeignKey(DefectType, on_delete=models.PROTECT,
                                     related_name='defects', null=True)
+    elimination_time = models.BigIntegerField(null=True)
+
+
+class Report(models.Model):
+    order = models.ForeignKey(Order, on_delete=models.PROTECT,
+                              related_name='reports')
+    received_at = models.BigIntegerField(null=True)
+    received_by = models.ForeignKey(Worker, on_delete=models.PROTECT,
+                               related_name='received_reports', null=True)
+
+    def received_at_dt(self):
+        if self.received_at:
+            if len(str(self.received_at)) == 13:
+                self.received_at //= 1000
+            return datetime.fromtimestamp(self.received_at, timezone.utc)
+        else:
+            return 'Ещё не принято'
+
+    def __str__(self) -> str:
+        return f'Листок осмотра {self.order}'
+
+    def defects(sef):
+        return Defect.objects.filter(order=self.order).all()

@@ -6,7 +6,7 @@
     <ul>
         {% for report in object_list %}
             <li>
-                <h4><a href="{% url 'report_detail' report.pk %}">Листок осмотра ВЛ {{ report.order.object_num }} от {{ report.object.job_finished_dt}}</a></h4>
+                <h4><a href="{% url 'report_detail' report.pk %}">Листок осмотра ВЛ {{ report.order.order_num }} от {{ report.order.job_finished_dt}}</a></h4>
             </li>
         {% endfor %}
     </ul>
