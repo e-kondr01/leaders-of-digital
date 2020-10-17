@@ -85,7 +85,7 @@ class Order(models.Model):
     def instructions_given_dt(self):
         if self.instructions_given:
             if len(str(self.instructions_given)) == 13:
-                self.instructions_given //= 100
+                self.instructions_given //= 1000
             return datetime.fromtimestamp(self.instructions_given, timezone.utc)
         else:
             return 'Ещё нет'
@@ -93,7 +93,7 @@ class Order(models.Model):
     def instructions_received_dt(self):
         if self.instructions_received:
             if len(str(self.instructions_received)) == 13:
-                self.instructions_received //= 100
+                self.instructions_received //= 1000
             return datetime.fromtimestamp(self.instructions_received, timezone.utc)
         else:
             return 'Ещё нет'
@@ -101,7 +101,7 @@ class Order(models.Model):
     def job_started_dt(self):
         if self.job_started:
             if len(str(self.job_started)) == 13:
-                self.job_started //= 100
+                self.job_started //= 1000
             return datetime.fromtimestamp(self.job_started, timezone.utc)
         else:
             return 'Ещё нет'
@@ -109,7 +109,7 @@ class Order(models.Model):
     def job_finished_dt(self):
         if self.job_finished:
             if len(str(self.job_finished)) == 13:
-                self.job_finished //= 100
+                self.job_finished //= 1000
             return datetime.fromtimestamp(self.job_finished, timezone.utc)
         else:
             return 'Ещё нет'
@@ -130,7 +130,7 @@ class Report(models.Model):
     def received_at_dt(self):
         if self.received_at:
             if len(str(self.received_at)) == 13:
-                self.received_at //= 100
+                self.received_at //= 1000
             return datetime.fromtimestamp(self.received_at, timezone.utc)
         else:
             return 'Ещё нет'
