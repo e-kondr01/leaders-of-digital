@@ -64,11 +64,11 @@ class SubmitOrderData(APIView):
         report = Report(order=order)
 
         job_started = request.data['job_started'] // 1000
-        job_started_dt = datetime.fromtimestamp(job_started, tz='utc')
+        job_started_dt = datetime.fromtimestamp(job_started, tz=datetime.timezone.utc)
         order.job_started = job_started_dt
         order.instructions_received = job_started_dt
         job_finished = request.data['job_finished'] // 1000
-        job_finished_dt = datetime.fromtimestamp(job_finished, tz='utc')
+        job_finished_dt = datetime.fromtimestamp(job_finished, tz=datetime.timezone.utc)
         order.job_finished = job_finished_dt
         order.active = False
 
