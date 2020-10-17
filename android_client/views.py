@@ -62,7 +62,7 @@ class SubmitOrderData(APIView):
         order_pk = request.data['order_id']
         order = Order.objects.get(pk=order_pk)
 
-        report = Report(order=order, received_at=datetime.timestamp(tz.now()))
+        report = Report(order=order, formed_at=datetime.timestamp(tz.now()))
 
         job_started = request.data['job_started'] // 1000
         order.job_started = job_started

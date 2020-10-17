@@ -135,6 +135,7 @@ class Defect(models.Model):
 class Report(models.Model):
     order = models.ForeignKey(Order, on_delete=models.PROTECT,
                               related_name='reports')
+    formed_at = models.BigIntegerField(null=True)
     received_at = models.BigIntegerField(null=True)
     received_by = models.ForeignKey(Worker, on_delete=models.PROTECT,
                                related_name='received_reports', null=True)
@@ -147,8 +148,16 @@ class Report(models.Model):
         else:
             return 'Ещё не принято'
 
+    def formed_at_dt(self):
+        if self.formed_at:
+            if len(str(self.formed_at)) == 13:
+                self.formed_at //= 1000
+            return datetime.fromtimestamp(self.formed_at, timezone.utc)
+        else:
+            return 'Нет времени осмотра'
+
     def __str__(self) -> str:
         return f'Листок осмотра {self.order}'
 
-    def defects(sef):
+    def defects(self):
         return Defect.objects.filter(order=self.order).all()
