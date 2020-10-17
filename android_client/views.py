@@ -15,8 +15,11 @@ class GetOrders(APIView):
         resp = []
         for order in orders:
             order_info = {}
+            order_info['order_id'] = order.pk
             order_info['order_num'] = order.order_num
             order_info['place'] = str(order.object) + order.range
+            order_info['description'] = order.safety_desc
+            order_info['master'] = order.master
             resp.append(order_info)
         return Response(resp)
 
