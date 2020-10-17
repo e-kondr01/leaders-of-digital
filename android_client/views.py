@@ -29,14 +29,18 @@ class GetOrders(APIView):
 class GetOrderInfo(APIView):
     permission_classes = (IsAuthenticated,)
 
-    def get(self, request):
-        pk = self.kwargs['pk']
+    def get(self, request, pk=0):
+        #pk = self.kwargs['pk']
         order = Order.objects.get(pk=pk)
+        subobjects = order.object.subobjects.all()
+        defects = DefectType.objects.all()
 
         resp = {}
         resp['defect_types'] = []
         resp['subobjects'] = []
-        defects = DefectType.objects.all()
+
         for defect in defects:
             resp['defect_types'].append(str(defect))
+        for subobject in subobjects:
+            resp['subobjects'].append(str(subobject))
         return Response(resp)
