@@ -6,7 +6,7 @@
     <ul>
         {% for order in object_list %}
             <li>
-                <h4><a href="{% url 'order_detail' order.pk %}">{{ order.place }}</a></h4>
+                <h4><a href="{% url 'order_detail' order.pk %}">Распоряжение номер {{ order.order_num }}</a></h4>
             </li>
         {% endfor %}
     </ul>

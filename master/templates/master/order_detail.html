@@ -2,8 +2,15 @@
 
 {% block body %}
 
-    <h2>{{ object.place }}</h2>
-
-    <p>Безопасность: {{ object.safety_desc }}</p>
+    <h2>Распоряжение номер {{ object.order_num }}</h2>
+    <p>Организация : {{object.organization }}</p>
+    <p>Подразделение : {{object.subdivision }}</p>
+    <p>Место и наименование проведения работ : {{object.object }} {{object.range }}</p>
+    <p>Технические мероприятия по обеспечению безопасности работ: {{object.safety_desc }}</p>
+    <p>Активно : {{object.active }}</p>
+    <p>Работник, отдавший распоряжение: {{object.master }} Подпись: {{object.instructions_given }}</p>
+    <p>Члены бригады: {{object.electrician }} Подпись: {{object.instructions_received }}</p>
+    <p>К работе приступили(дата, время) : {{object.job_started }}</p>
+    <p>Работа закончена(дата, время) : {{object.job_finished }}</p>
     
 {% endblock %}

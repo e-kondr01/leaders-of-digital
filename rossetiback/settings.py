@@ -64,6 +64,8 @@ INSTALLED_APPS = [
     'master',
     'electrician',
     'mainengineer',
+    'common',
+    'android_client',
 ]
 
 MIDDLEWARE = [

@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, CreateView, DetailView
 
-from .models import *
+from common.models import *
 
 
 class OrderList(ListView):
@@ -11,11 +11,14 @@ class OrderList(ListView):
 
 class CreateOrder(CreateView):
     model = Order
-    fields = ['place', 'safety_desc']
+    fields = ['order_num', 'organization', 'subdivision', 'object', 'range', 'safety_desc', 'electrician']
+    template_name = "master/order_form.html"
 
     def form_valid(self, form):
+        form.instance.master = self.request.user.worker
         return super().form_valid(form)
 
 
 class OrderDetail(DetailView):
     model = Order
+    template_name = "master/order_detail.html"
