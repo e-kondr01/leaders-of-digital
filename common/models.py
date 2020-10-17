@@ -17,7 +17,7 @@ class Worker(models.Model):
     name = models.CharField(max_length=128)
 
     def __str__(self) -> str:
-        return self.name
+        return f'{self.name} {self.safety_group}'
 
 
 class Organization(models.Model):
