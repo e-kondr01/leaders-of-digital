@@ -10,10 +10,14 @@ class GetOrders(APIView):
     permission_classes = (IsAuthenticated,)  
 
     def get(self, request):
-        worker = Worker.objects.all()[0]
-        order = Order.objects.filter(electrician=worker).filter(active=True).all()[0]
-        resp = {}
-        resp['order_num'] = order.order_num
+        worker = Worker.objects.get(user=request.user)
+        orders = Order.objects.filter(electrician=worker).filter(active=True).all()
+        resp = []
+        for order in orders:
+            order_info = {}
+            order_info['order_num'] = order.order_num
+            order_info['place'] = order.object + order.range
+            resp.append(order_info)
         return Response(resp)
 
 
