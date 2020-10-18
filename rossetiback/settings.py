@@ -149,3 +149,5 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',  # <-- And here
     ],
 }
+
+LOGIN_REDIRECT_URL = '/'
